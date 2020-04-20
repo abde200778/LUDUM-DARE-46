@@ -69,8 +69,8 @@ namespace Huntrox.Games.LD46
 
 		public void AddCashText(GameObject targetObject, float p_duration, Vector3 targetscale, Color p_colorcolor, string text)
 		{
+			targetObject.transform.localScale = new Vector3(1f, 1f, 1f);
 			StartCoroutine(addCashText(targetObject, p_duration, targetscale, p_colorcolor, text));
-
 
 		}
 

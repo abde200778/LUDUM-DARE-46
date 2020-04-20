@@ -19,6 +19,8 @@ namespace Huntrox.Games.LD46
 		[SerializeField] private GameObject Target_fish_spot;
 		[SerializeField] private GameObject Target_Trader_Sell;
 		[SerializeField] private GameObject Target_Trader_Equipment;
+		[SerializeField] private GameObject MoveAndRotateTutorial;
+		[SerializeField] private GameObject Pause;
 
 
 
@@ -34,6 +36,8 @@ namespace Huntrox.Games.LD46
 			Target_Trader_Sell = GameObject.Find("TraderTrigger");
 			Target_Trader_Equipment = GameObject.Find("TraderEquipment");
 			FishingTutorialUI = GameObject.Find("Canvas").transform.Find("FishingTutorialUI").gameObject;
+			MoveAndRotateTutorial = GameObject.Find("Canvas").transform.Find("MoveAndRotateTutorial").gameObject;
+			Pause = GameObject.Find("Canvas").transform.Find("Pause").gameObject;
 		}
 		// Start is called before the first frame update
 		void Start()
@@ -46,12 +50,12 @@ namespace Huntrox.Games.LD46
 		void Update()
 		{
 			if (tutorialState == TutorialState.Start) {
-				ScreenToolTip.inctanse.SetTooltip("press AWSD to move and rotate");
+				//ScreenToolTip.inctanse.SetTooltip("press AWSD to move and rotate");
 
-				if (Input.GetButtonDown("Vertical")) VerticalPress= true;
+				if (Input.GetButtonDown("Vertical")) VerticalPress = true;
 				if (Input.GetButtonDown("Horizontal")) HorizontalPress = true;
-	
-				if(VerticalPress && HorizontalPress)
+
+				if (VerticalPress && HorizontalPress)
 				{
 					ScreenToolTip.inctanse.SetTooltip("");
 					ChangeState(TutorialState.FindFishSpot);
@@ -59,15 +63,18 @@ namespace Huntrox.Games.LD46
 
 			}
 
-			
 
+			if (Input.GetKeyDown(KeyCode.Escape)){
+
+				PuaseTheGame();
+			}
 
 		}
-		public  void pause()
+		public void pause()
 		{
 
-			GetComponent<UI_popup>().EnableObject(FishingTutorialUI,0.3f, true);
-			Invoke("PauseGame", 0.3f);
+			GetComponent<UI_popup>().EnableObject(FishingTutorialUI, 0.29f, true);
+			Invoke("PauseGame", 0.31f);
 		}
 		void PauseGame()
 		{
@@ -89,11 +96,12 @@ namespace Huntrox.Games.LD46
 			{
 				case TutorialState.Start:
 					Dirarrow.SetActive(false);
-
+					MoveAndRotateTutorial.SetActive(true);
 					break;
 
 				case TutorialState.FindFishSpot:
 					Dirarrow.GetComponent<direction_arrow>().SetTarget(Target_fish_spot.transform);
+					MoveAndRotateTutorial.SetActive(false);
 					Dirarrow.SetActive(true);
 
 					break;
@@ -116,7 +124,7 @@ namespace Huntrox.Games.LD46
 					ScreenToolTip.inctanse.SetTooltip("follow the red arrow to buy upgrade  your fishing equipments");
 					break;
 				case TutorialState.finish:
-					//	ScreenToolTip.inctanse.SetTooltip("Tutorial finished ");
+					ScreenToolTip.inctanse.SetTooltip("Now you are ready ");
 
 					inTutorial = false;
 					Dirarrow.SetActive(false);
@@ -135,10 +143,32 @@ namespace Huntrox.Games.LD46
 
 
 
+		public void Resume()
+		{
 
+			//Time.timeScale = 1;
+			GetComponent<UI_popup>().DisableObject(Pause, 0.3f);
+		}
+		public void PuaseTheGame()
+		{
 
+			GetComponent<UI_popup>().EnableObject(Pause, 0.2f, true);
+		//	Invoke("PauseGame", 0.22f);
 
+		}
 
+		public void OpenSettings()
+		{
+			Settings.instance.OpenSetting();
+
+		}
+		public void Quiting()
+		{
+			Settings.instance.QuitGame();
+
+		}
+
+		
 
 	}
 

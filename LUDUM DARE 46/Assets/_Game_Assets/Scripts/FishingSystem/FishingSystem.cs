@@ -505,7 +505,7 @@ namespace Huntrox.Games.LD46
 			}
 			GM.GetComponent<UI_popup>().EnableObject(target_Fish_UI, .3f,false);
 			target_Fish_UI.transform.Find("Timer").GetComponent<TextMeshProUGUI>().color = Color.white;
-
+			target_Fish_UI.transform.Find("Timer").transform.localScale = new Vector3(1f, 1f, 1f);
 
 			//	transform.Find("FishSkin").
 			t_fish.transform.Find("FishSkin").localScale = t_fish.transform.Find("FishSkin").localScale * newScale;

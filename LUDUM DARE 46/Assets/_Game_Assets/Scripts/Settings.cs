@@ -94,7 +94,7 @@ namespace Huntrox.Games.LD46 {
 			Application.Quit();
 
 		}
-		public void Setting()
+		public void OpenSetting()
 		{
 
 			GameObject.FindGameObjectWithTag("GM").GetComponent<UI_popup>().EnableObject(settings, 0.3f, true);

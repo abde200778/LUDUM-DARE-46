@@ -10,6 +10,7 @@ public class FishingSpot : MonoBehaviour
 	[SerializeField] private float timer;
 	[SerializeField] private float _raduis;
 	[SerializeField] private bool _isfishingable;
+	[SerializeField] private bool MainMenu;
 
 	public bool isfishingable { get { return _isfishingable; } }
 
@@ -58,9 +59,11 @@ public class FishingSpot : MonoBehaviour
 
 	public void Init()
 	{
-
-		fishcount = Random.Range(5, 11);
-		timer = Random.Range(180f, 300f);
+		if (MainMenu)
+			timer = 6000f;
+		else
+			timer = Random.Range(180f, 300f);
+		fishcount = Random.Range(4, 11);
 		_isfishingable = true;
 		spawnfishes();
 	
